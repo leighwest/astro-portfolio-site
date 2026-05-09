@@ -1,30 +1,35 @@
-# Astro Starter Kit: Portfolio
+# leighwest.dev
+
+Personal site and blog — backend engineering, Kubernetes, GitOps, and notes from the path toward platform/solutions engineering work.
+
+Built with [Astro](https://astro.build), starting from the official portfolio template and customised from there: gradient theme system, custom icon set, content collections for the blog, and tweaks throughout the layout, typography, and component structure.
+
+## Stack
+
+- [Astro](https://astro.build) — static site framework
+- TypeScript
+- Markdown / MDX content collections
+- Deployed on [hosting platform — fill in]
+
+## Local development
 
 ```sh
-npm create astro@latest -- --template portfolio
+npm install
+npm run dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/portfolio)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/portfolio)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/portfolio/devcontainer.json)
+The dev server runs at `localhost:4321`.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commands
 
-![portfolio](https://user-images.githubusercontent.com/357379/210779178-a98f0fb7-6b1a-4068-894c-8e1403e26654.jpg)
+| Command           | Action                                       |
+| :---------------- | :------------------------------------------- |
+| `npm install`     | Install dependencies                         |
+| `npm run dev`     | Start local dev server at `localhost:4321`   |
+| `npm run build`   | Build production site to `./dist/`           |
+| `npm run preview` | Preview the build locally before deploying   |
 
-## 🧞 Commands
 
-All commands are run from the root of the project, from a terminal:
+## License
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Content (blog posts, copy, images) © Leigh West. Code is available under MIT for reference — feel free to learn from it, but please don't redeploy as-is.
