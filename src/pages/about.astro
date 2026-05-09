@@ -12,40 +12,40 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 		<main class="wrapper about">
 			<Hero
 				title="About"
-				tagline="Thanks for stopping by. Read below to learn more about myself and my background."
+				tagline="Thanks for stopping by. Read on to learn a bit about me and my background."
 			>
-				<img
+				<!-- <img
 					width="1553"
 					height="873"
 					src="/assets/at-work.jpg"
 					alt="Leigh West at work with a colleague"
-				/>
+				/> -->
 			</Hero>
 
 			<section>
 				<h2 class="section-title">Background</h2>
 				<div class="content">
 					<p>
-						Lorem ipsum dolor sit amet, <a href="https://astro.build/">Astro</a> makes
-						people happy. Sed do eiusmod tempor incididunt ut labore et dolore magna
-						aliqua. Proin nibh nisl condimentum id venenatis a condimentum vitae.
-						Dapibus ultrices in iaculis nunc. Arcu odio ut sem nulla pharetra diam
-						sit amet. Diam quis enim lobortis scelerisque fermentum dui faucibus in
-						ornare.
+						I'm a backend engineer based in Melbourne, working primarily in Java
+						and Spring Boot, with a few years of production experience building
+						services that run on Kubernetes and ship through GitOps pipelines
+						with Flux and Kustomize.
 					</p>
 					<p>
-						Arcu dui vivamus arcu felis bibendum ut tristique et egestas. Eget
-						gravida cum sociis natoque penatibus. Cras fermentum odio eu feugiat
-						pretium nibh. Proin nibh nisl condimentum id venenatis. Porta nibh
-						venenatis cras sed felis eget velit. Id diam vel quam elementum
-						pulvinar etiam non.
+						What I've come to enjoy most isn't the code itself — it's the
+						conversations around it. Explaining why a particular tradeoff
+						matters, helping a team align on an approach, or breaking down a
+						complex problem so it stops feeling overwhelming. The parts of
+						engineering that involve people.
 					</p>
 					<p>
-						Ultrices tincidunt arcu non sodales neque sodales ut. Sed enim ut
-						sem viverra aliquet eget sit amet. Lacus luctus accumsan tortor
-						posuere ac ut consequat semper viverra. Viverra accumsan in nisl
-						nisi scelerisque eu ultrices. In massa tempor nec feugiat nisl
-						pretium fusce.
+						That's why I'm increasingly drawn to platform engineering and
+						solutions-focused roles — work that sits at the intersection of deep
+						technical knowledge and client-facing communication. I came up
+						through a CS degree and spent the early years heads-down on backend
+						systems, but the throughline of every project I've valued has been
+						the same: making complexity feel manageable for the people who have
+						to live with it.
 					</p>
 				</div>
 			</section>
@@ -95,6 +95,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 		.content {
 			grid-column: 2 / 4;
+			display: flex;
+			flex-direction: column;
+			gap: 1.25rem;
 		}
 
 		.content :global(a) {
