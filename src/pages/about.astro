@@ -52,13 +52,62 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 			<section>
 				<h2 class="section-title">Education</h2>
 				<div class="content">
-					<p>Corporis voluptates tenetur laudantium.</p>
+					<div class="education-entry">
+						<h3>Bachelor of Computer Science (Software Development)</h3>
+						<p class="meta">University of New England · 2018–2021</p>
+						<p>GPA 6.86/7</p>
+						<p>
+							Vice-Chancellor's Scholar — awarded to the university's most
+							academically high-achieving graduates.
+						</p>
+					</div>
+
+					<div class="education-entry">
+						<h3>Earlier: Exercise Science</h3>
+						<p class="meta">
+							Deakin University & Australian Catholic University · 2007–2011
+						</p>
+						<p>
+							Bachelor's degree in Exercise and Sport Science, followed by
+							postgraduate study in Applied Exercise Science. A previous career
+							that taught me how to explain complex ideas in plain language and
+							work directly with people — habits that have proven just as useful
+							in software.
+						</p>
+					</div>
 				</div>
 			</section>
 			<section>
 				<h2 class="section-title">Skills</h2>
 				<div class="content">
-					<p>officia unde omnis</p>
+					<h3 class="skills-group-title">Languages & frameworks</h3>
+					<div class="tags">
+						<span class="tag">Java</span>
+						<span class="tag">Spring Boot</span>
+						<span class="tag">TypeScript</span>
+						<span class="tag">React</span>
+						<span class="tag">Kotlin</span>
+					</div>
+
+					<h3 class="skills-group-title">Cloud & infrastructure</h3>
+					<div class="tags">
+						<span class="tag">Kubernetes</span>
+						<span class="tag">Kustomize</span>
+						<span class="tag">Flux</span>
+						<span class="tag">GitOps</span>
+						<span class="tag">AWS</span>
+						<span class="tag">Docker</span>
+						<span class="tag">CI/CD</span>
+					</div>
+
+					<h3 class="skills-group-title">Practices</h3>
+					<div class="tags">
+						<span class="tag">API design</span>
+						<span class="tag">Testing</span>
+						<span class="tag">DevOps</span>
+						<span class="tag">Cloud-native architecture</span>
+						<span class="tag">Technical communication</span>
+					</div>
 				</div>
 			</section>
 		</main>
@@ -109,6 +158,55 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 		.content :global(a:hover),
 		.content :global(a:focus) {
 			text-decoration-color: currentColor;
+		}
+
+		.education-entry {
+			display: flex;
+			flex-direction: column;
+			gap: 0.25rem;
+		}
+
+		.education-entry + .education-entry {
+			margin-top: 1.5rem;
+		}
+
+		.education-entry h3 {
+			font-size: var(--text-md);
+			color: var(--gray-0);
+			margin: 0;
+		}
+
+		.meta {
+			color: var(--gray-400);
+			font-size: var(--text-base);
+		}
+
+		.skills-group-title {
+			font-size: var(--text-md);
+			color: var(--gray-0);
+			margin: 1.5rem 0 0.75rem 0;
+			font-family: var(--font-brand);
+			font-weight: 500;
+		}
+
+		.skills-group-title:first-child {
+			margin-top: 0;
+		}
+
+		.tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+		}
+
+		.tag {
+			padding: 0.25rem 0.75rem;
+			border-radius: 999px;
+			font-size: var(--text-sm);
+			font-family: var(--font-body);
+			font-weight: 400;
+			background: var(--gray-800);
+			color: var(--gray-300);
 		}
 
 		@media (min-width: 50em) {
