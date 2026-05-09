@@ -11,13 +11,21 @@ const textLinks: { label: string; href: string }[] = [
 ];
 
 /** Icon links to social media — edit these with links to your profiles! */
-const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[] = [
-	{ label: 'Twitter', href: 'https://twitter.com/me', icon: 'twitter-logo' },
-	{ label: 'Twitch', href: 'https://twitch.tv/me', icon: 'twitch-logo' },
-	{ label: 'GitHub', href: 'https://github.com/me', icon: 'github-logo' },
-	{ label: 'CodePen', href: 'https://codepen.io/me', icon: 'codepen-logo' },
-	{ label: 'dribbble', href: 'https://dribbble.com/me', icon: 'dribbble-logo' },
-	{ label: 'YouTube', href: 'https://www.youtube.com/@me/', icon: 'youtube-logo' },
+const iconLinks: {
+	label: string;
+	href: string;
+	icon: keyof typeof iconPaths;
+}[] = [
+	{
+		label: 'GitHub',
+		href: 'https://github.com/leighwest/',
+		icon: 'github-logo',
+	},
+	{
+		label: 'LinkedIn',
+		href: 'https://www.linkedin.com/in/leigh-west/',
+		icon: 'linkedin-logo',
+	},
 ];
 
 /** Test if a link is pointing to the current page. */
@@ -32,7 +40,12 @@ const isCurrentPage = (href: string) => {
 <nav>
 	<div class="menu-header">
 		<a href="/" class="site-title">
-			<Icon icon="terminal-window" color="var(--accent-regular)" size="1.6em" gradient />
+			<Icon
+				icon="terminal-window"
+				color="var(--accent-regular)"
+				size="1.6em"
+				gradient
+			/>
 			Leigh West
 		</a>
 		<menu-button>
@@ -49,7 +62,11 @@ const isCurrentPage = (href: string) => {
 			{
 				textLinks.map(({ label, href }) => (
 					<li>
-						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={href}>
+						<a
+							aria-current={isCurrentPage(href) ? 'page' : null}
+							class="link"
+							href={href}
+						>
 							{label}
 						</a>
 					</li>
@@ -76,7 +93,11 @@ const isCurrentPage = (href: string) => {
 			{
 				textLinks.map(({ label, href }) => (
 					<li>
-						<a aria-current={isCurrentPage(href) ? 'page' : null} class="link" href={href}>
+						<a
+							aria-current={isCurrentPage(href) ? 'page' : null}
+							class="link"
+							href={href}
+						>
 							{label}
 						</a>
 					</li>
