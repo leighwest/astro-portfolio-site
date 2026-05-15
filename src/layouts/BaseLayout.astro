@@ -46,6 +46,11 @@ const { title, description } = Astro.props;
 			document
 				.querySelectorAll('.fade-on-scroll')
 				.forEach((el) => observer.observe(el));
+
+			document.querySelectorAll('a[href^="http"]').forEach((link) => {
+				link.setAttribute('target', '_blank');
+				link.setAttribute('rel', 'noopener noreferrer');
+			});
 		</script>
 
 		<style>
