@@ -1,8 +1,8 @@
 ---
 title: Why I Replaced Kafka with SQS
 publishDate: 2026-04-24 00:00:00
-img: /assets/blog/amazon-sqs.png
-img_alt: The amazon sqs logo
+img: /assets/blog/kafka-to-sqs.webp
+img_alt: A Kafka logo and an AWS SQS logo side by side with an arrow between them, showing the migration from Kafka to SQS
 description: |
   Kafka is a great technology. It's also complete overkill for a single EC2 instance with one producer and one consumer. Here's why I swapped it out for SQS, and what that actually looked like in Spring Boot.
 tags:
@@ -34,11 +34,13 @@ SQS is a managed queue; no broker to run, no Zookeeper, no retention log to mana
 For this use case the trade-offs are straightforward:
 
 **What I gave up:**
+
 - Message replay (SQS deletes messages after successful consumption)
 - Strict ordering guarantees (SQS standard queues are best-effort ordered)
 - High-throughput fan-out to multiple consumer groups
 
 **What I gained:**
+
 - ~512 MB back on the instance
 - No Kafka or Zookeeper containers in Docker Compose
 - AWS handles SQS polling via Lambda — no consumer configuration to manage
@@ -119,7 +121,6 @@ sqs.order-dispatched-queue=order-dispatched
 
 In production the app runs on an EC2 instance with an IAM instance role — no credentials in config. Locally I use the AWS CLI credentials file.
 
-
 ### Removing Kafka from Docker Compose
 
 Before — an extra service and a named volume just to move messages between two services:
@@ -153,4 +154,3 @@ Lesson: when a message-passing integration "works" immediately, check that the p
 ---
 
 SQS isn't the right tool for every job, but it was the right tool for this one. If you're running Kafka on a single instance with one producer and one consumer, it's worth asking whether you actually need it.
-
