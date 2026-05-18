@@ -138,6 +138,13 @@ const { Content } = await render(entry);
     color: var(--gray-0);
   }
 
+  .content :global(pre) {
+    padding: 1.25rem 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+
   .back-link,
   .content :global(a) {
     text-decoration: 1px solid underline transparent;

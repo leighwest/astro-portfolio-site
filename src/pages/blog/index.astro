@@ -86,15 +86,13 @@ const posts = (await getCollection('blog')).sort(
     padding: 0;
     margin: 0;
   }
-
   .article__inner {
     display: flex;
     flex-direction: column;
     height: 100%;
     border: 1px solid var(--gray-800);
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
     margin: 0 16px 32px 16px;
-
     overflow: hidden;
     background: var(--gradient-subtle);
     transition: box-shadow var(--theme-transition);
@@ -110,8 +108,7 @@ const posts = (await getCollection('blog')).sort(
 
   .article__image img {
     width: 100%;
-    aspect-ratio: 3 / 2;
-    object-fit: contain;
+    aspect-ratio: 16 / 9;
     display: block;
     transition: transform 0.3s ease;
   }
