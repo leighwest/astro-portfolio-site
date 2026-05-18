@@ -1,5 +1,5 @@
 ---
-title: Why I Replaced Kafka with SQS
+title: Why I Replaced Kafka with SQS for my Spring Boot App
 publishDate: 2026-04-24 00:00:00
 img: /assets/blog/kafka-to-sqs.webp
 img_alt: A Kafka logo and an AWS SQS logo side by side with an arrow between them, showing the migration from Kafka to SQS
