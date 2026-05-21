@@ -172,3 +172,5 @@ Integration tests        → Testcontainers (MySQL), @MockBean for SQS listener
 Unit tests run fast. Integration tests run slower but are trustworthy. The SQS listener doesn't connect to anything in either case.
 
 It's not an exotic setup, but getting the details right — the dummy credentials, the `ddl-auto`, the SQL file syntax, the `@Profile` on `DataLoader` — took longer than it should have. Hopefully this saves you some of that time.
+
+> _The code referenced in this post is tagged [v1.0.0](https://github.com/leighwest/orders/tree/v1.0.0)._

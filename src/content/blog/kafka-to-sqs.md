@@ -154,3 +154,5 @@ Lesson: when a message-passing integration "works" immediately, check that the p
 ---
 
 SQS isn't the right tool for every job, but it was the right tool for this one. If you're running Kafka on a single instance with one producer and one consumer, it's worth asking whether you actually need it.
+
+> _The code referenced in this post is tagged [v1.0.0](https://github.com/leighwest/orders/tree/v1.0.0)._
