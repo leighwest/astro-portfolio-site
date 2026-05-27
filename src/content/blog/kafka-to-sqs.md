@@ -25,7 +25,7 @@ When I first built my [cupcake orders service](https://github.com/leighwest/orde
 
 The problem was operational. Running Kafka locally meant an extra container, a custom Dockerfile, and a named volume just to move a message from one place to another. On a t3.small (2 GB RAM) shared with Spring Boot and MySQL, Kafka was sitting at around 512 MB at idle. That's a quarter of my total memory budget gone before the app had done anything useful.
 
-In production on EC2, the story was the same. I wasn't using any of the features that justify Kafka's complexity — no consumer groups, no replay, no log compaction, no high-throughput fan-out. I had one producer and one consumer, and Kafka was doing the job of a simple queue.
+I also wasn't using any of the features that justify Kafka's complexity — no consumer groups, no replay, no log compaction, no high-throughput fan-out. I had one producer and one consumer, and Kafka was doing the job of a simple queue.
 
 ## The Decision
 
