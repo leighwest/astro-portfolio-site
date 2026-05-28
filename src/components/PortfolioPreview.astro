@@ -2,100 +2,101 @@
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
-	project: CollectionEntry<'work'>;
+  project: CollectionEntry<'work'>;
 }
 
 const { data, id } = Astro.props.project;
 ---
 
 <a class="card" href={`/work/${id}`}>
-	<img
-		src={data.img}
-		alt={data.img_alt || ''}
-		loading="lazy"
-		decoding="async"
-	/>
-	<div class="content">
-		<h3 class="title">{data.title}</h3>
-		<p class="description">{data.description}</p>
-		<div class="tags">
-			{data.tags.map((tag) => <span class="tag">{tag}</span>)}
-		</div>
-	</div>
+  <img
+    src={data.img}
+    alt={data.img_alt || ''}
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="content">
+    <h3 class="title">{data.title}</h3>
+    <p class="description">{data.description}</p>
+    <div class="tags">
+      {data.tags.map((tag) => <span class="tag">{tag}</span>)}
+    </div>
+  </div>
 </a>
 
 <style>
-	.card {
-		display: flex;
-		flex-direction: row;
-		background: var(--gradient-subtle);
-		border: 1px solid var(--gray-800);
-		border-radius: 0.75rem;
-		overflow: hidden;
-		box-shadow: var(--shadow-sm);
-		text-decoration: none;
-		font-family: var(--font-brand);
-		font-weight: 500;
-		transition: box-shadow var(--theme-transition);
-	}
+  .card {
+    display: flex;
+    flex-direction: row;
+    background: var(--gradient-subtle);
+    border: 1px solid var(--gray-800);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    font-family: var(--font-brand);
+    font-weight: 500;
+    transition: box-shadow var(--theme-transition);
+  }
 
-	.card:hover {
-		box-shadow: var(--shadow-md);
-	}
+  .card:hover {
+    box-shadow: var(--shadow-md);
+  }
 
-	img {
-		width: 16rem;
-		height: 16rem;
-		object-fit: cover;
-		flex-shrink: 0;
-	}
+  img {
+    width: 16rem;
+    height: 16rem;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
 
-	.content {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-		padding: 1.25rem 1.5rem;
-		justify-content: center;
-	}
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    justify-content: center;
+  }
 
-	.title {
-		font-size: var(--text-lg);
-		color: var(--gray-100);
-		margin: 0;
-	}
+  .title {
+    font-size: var(--text-lg);
+    color: var(--gray-100);
+    margin: 0;
+  }
 
-	.description {
-		font-size: var(--text-sm);
-		color: var(--gray-300);
-		margin: 0;
-		font-family: var(--font-body);
-		font-weight: 400;
-		line-height: 1.5;
-	}
+  .description {
+    font-size: var(--text-sm);
+    color: var(--gray-300);
+    margin: 0;
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.5;
+    max-width: 66ch;
+  }
 
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-	}
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 
-	.tag {
-		padding: 0.25rem 0.75rem;
-		border-radius: 999px;
-		font-size: var(--text-sm);
-		font-family: var(--font-body);
-		font-weight: 400;
-		background: var(--gray-800);
-		color: var(--gray-300);
-	}
+  .tag {
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: var(--text-sm);
+    font-family: var(--font-body);
+    font-weight: 400;
+    background: var(--gray-800);
+    color: var(--gray-300);
+  }
 
-	@media (min-width: 50em) {
-		.card {
-			border-radius: 1.5rem;
-		}
+  @media (min-width: 50em) {
+    .card {
+      border-radius: 1.5rem;
+    }
 
-		img {
-			width: 16rem;
-		}
-	}
+    img {
+      width: 16rem;
+    }
+  }
 </style>
