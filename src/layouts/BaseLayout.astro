@@ -10,14 +10,23 @@ import Nav from '../components/Nav.astro';
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
+	image?: string | undefined;
+	type?: string | undefined;
+	publishDate?: Date | undefined;
 }
 
-const { title, description } = Astro.props;
+const { title, description, image, type, publishDate } = Astro.props;
 ---
 
 <html lang="en">
 	<head>
-		<MainHead title={title} description={description} />
+		<MainHead
+			title={title}
+			description={description}
+			image={image}
+			type={type}
+			publishDate={publishDate}
+		/>
 	</head>
 	<body>
 		<div class="stack backgrounds">

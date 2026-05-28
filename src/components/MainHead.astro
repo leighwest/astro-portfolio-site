@@ -5,12 +5,16 @@ interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
 	image?: string | undefined;
+	type?: string | undefined;
+	publishDate?: Date | undefined;
 }
 
 const {
 	title = 'Leigh West: Personal Site',
 	description = 'Leigh West — backend engineer based in Melbourne, working across Java, AWS and Kubernetes, moving toward platform and solutions-focused work that bridges technical and business needs.',
 	image = '/og-image.png',
+	type = 'website',
+	publishDate,
 } = Astro.props;
 
 const ogImageURL = new URL(image, Astro.site);
@@ -24,11 +28,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <title>{title}</title>
 
 <!-- Open Graph (LinkedIn, Facebook, Slack, etc.) -->
-<meta property="og:type" content="website" />
+<meta property="og:type" content={type} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImageURL} />
 <meta property="og:url" content={canonicalURL} />
+{
+	type === 'article' && publishDate && (
+		<meta
+			property="article:published_time"
+			content={publishDate.toISOString()}
+		/>
+	)
+}
+{type === 'article' && <meta property="article:author" content="Leigh West" />}
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" />
