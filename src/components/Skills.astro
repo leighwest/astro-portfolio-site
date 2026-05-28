@@ -3,81 +3,85 @@ import Icon from './Icon.astro';
 ---
 
 <section class="box skills">
-	<div class="stack gap-2 lg:gap-4">
-		<Icon
-			icon="terminal-window"
-			color="var(--accent-regular)"
-			size="2.5rem"
-			gradient
-		/>
-		<h2>Backend Engineering</h2>
-		<p>
-			Java and Spring Boot in production — designing APIs, services, and data
-			flows that hold up under real-world load and complexity.
-		</p>
-	</div>
-	<div class="stack gap-2 lg:gap-4">
-		<Icon
-			icon="gitMerge"
-			color="var(--accent-regular)"
-			size="2.5rem"
-			gradient
-		/>
-		<h2>From Code to Cluster</h2>
-		<p>
-			Comfortable across the stack, from Spring Boot services to Kubernetes
-			clusters and GitOps pipelines with Flux and Kustomize.
-		</p>
-	</div>
-	<div class="stack gap-2 lg:gap-4">
-		<Icon
-			icon="messagesSquare"
-			color="var(--accent-regular)"
-			size="2.5rem"
-			gradient
-		/>
-		<h2>Collaborative by Default</h2>
-		<p>
-			I've always gravitated toward the parts of engineering that involve
-			working with people — explaining tradeoffs, aligning teams, and making
-			complexity feel manageable.
-		</p>
-	</div>
+  <div class="stack gap-2 lg:gap-4">
+    <Icon
+      icon="terminal-window"
+      color="var(--accent-regular)"
+      size="2.5rem"
+      gradient
+    />
+    <h2>Backend Engineering</h2>
+    <p>
+      Java and Spring Boot in production — designing APIs, services, and data
+      flows that hold up under real-world load and complexity.
+    </p>
+  </div>
+  <div class="stack gap-2 lg:gap-4">
+    <Icon
+      icon="gitMerge"
+      color="var(--accent-regular)"
+      size="2.5rem"
+      gradient
+    />
+    <h2>From Code to Cluster</h2>
+    <p>
+      Comfortable across the stack, from Spring Boot services to Kubernetes
+      clusters and GitOps pipelines with Flux and Kustomize.
+    </p>
+  </div>
+  <div class="stack gap-2 lg:gap-4">
+    <Icon
+      icon="messagesSquare"
+      color="var(--accent-regular)"
+      size="2.5rem"
+      gradient
+    />
+    <h2>Collaborative by Default</h2>
+    <p>
+      I've always gravitated toward the parts of engineering that involve
+      working with people — explaining tradeoffs, aligning teams, and making
+      complexity feel manageable.
+    </p>
+  </div>
 </section>
 
 <style>
-	.box {
-		border: 1px solid var(--gray-800);
-		border-radius: 0.75rem;
-		padding: 1.5rem;
-		background-color: var(--gray-999_40);
-		box-shadow: var(--shadow-sm);
-	}
+  .box {
+    border: 1px solid var(--gray-800);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    background-color: var(--gray-999_40);
+    box-shadow: var(--shadow-sm);
+  }
 
-	.skills {
-		display: flex;
-		flex-direction: column;
-		gap: 3rem;
-	}
+  .skills {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
 
-	.skills p {
-		color: var(--gray-400);
-	}
+  .skills h2 {
+    font-size: var(--text-3xl);
+  }
 
-	@media (min-width: 50em) {
-		.box {
-			border-radius: 1.5rem;
-			padding: 2.5rem;
-		}
+  .skills p {
+    color: var(--gray-400);
+  }
 
-		.skills {
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			gap: 5rem;
-		}
+  @media (min-width: 50em) {
+    .box {
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+    }
 
-		.skills h2 {
-			font-size: var(--text-xl);
-		}
-	}
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5rem;
+    }
+
+    .skills h2 {
+      font-size: var(--text-xl);
+    }
+  }
 </style>
