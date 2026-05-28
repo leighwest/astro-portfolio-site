@@ -17,17 +17,17 @@ const { data, id } = Astro.props.project;
   />
   <div class="content">
     <h3 class="title">{data.title}</h3>
-    <p class="description">{data.description}</p>
     <div class="tags">
       {data.tags.map((tag) => <span class="tag">{tag}</span>)}
     </div>
+    <p class="description">{data.description}</p>
   </div>
 </a>
 
 <style>
   .card {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     background: var(--gradient-subtle);
     border: 1px solid var(--gray-800);
     border-radius: 0.75rem;
@@ -44,7 +44,8 @@ const { data, id } = Astro.props.project;
   }
 
   img {
-    width: 16rem;
+    /* width: 16rem; */
+    width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
     flex-shrink: 0;
@@ -93,6 +94,7 @@ const { data, id } = Astro.props.project;
 
   @media (min-width: 50em) {
     .card {
+      flex-direction: row;
       border-radius: 1.5rem;
     }
 
