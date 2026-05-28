@@ -3,7 +3,7 @@ title: Instance Starter
 publishDate: 2026-05-28 00:00:00
 img: /assets/instance-starter.webp
 img_alt: Illustrated control panel with a large green start button, a status light, and a stylised AWS EC2 instance icon on the screen above it
-description: |
+description: >-
   A web application for starting and stopping AWS EC2 instances on demand,
   built as a working demonstration of zero-touch provisioning, CI/CD, and
   real-time status with WebSockets.

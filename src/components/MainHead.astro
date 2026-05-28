@@ -17,12 +17,14 @@ const {
 	publishDate,
 } = Astro.props;
 
+const cleanDescription = description?.trim();
+
 const ogImageURL = new URL(image, Astro.site);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <meta charset="UTF-8" />
-<meta name="description" content={description} />
+<meta name="description" content={cleanDescription} />
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
 <title>{title}</title>
@@ -30,7 +32,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <!-- Open Graph (LinkedIn, Facebook, Slack, etc.) -->
 <meta property="og:type" content={type} />
 <meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
+<meta property="og:description" content={cleanDescription} />
 <meta property="og:image" content={ogImageURL} />
 <meta property="og:url" content={canonicalURL} />
 {

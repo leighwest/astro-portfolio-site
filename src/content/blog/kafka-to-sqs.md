@@ -3,7 +3,7 @@ title: Why I Replaced Kafka with SQS for my Spring Boot App
 publishDate: 2026-04-24 00:00:00
 img: /assets/blog/kafka-to-sqs.webp
 img_alt: A Kafka logo and an AWS SQS logo side by side with an arrow between them, showing the migration from Kafka to SQS
-description: |
+description: >-
   Kafka is a great technology. It's also complete overkill for a single EC2 instance with one producer and one consumer. Here's why I swapped it out for SQS, and what that actually looked like in Spring Boot.
 tags:
   - AWS

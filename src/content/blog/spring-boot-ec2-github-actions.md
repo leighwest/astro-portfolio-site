@@ -3,7 +3,7 @@ title: Deploying a Spring Boot App to EC2 with GitHub Actions and ECR
 publishDate: 2026-05-09 00:00:00
 img: /assets/blog/spring-boot-ec2-github-actions.webp
 img_alt: A code editor with the GitHub logo, connected by arrows through a GitHub Actions workflow diagram to an AWS EC2 instance with a Spring Boot logo
-description: |
+description: >-
   A three-job GitHub Actions pipeline that builds and tests a Spring Boot app, pushes a Docker image to ECR, and deploys it to EC2 — with secrets fetched from SSM Parameter Store at deploy time, not stored in GitHub.
 tags:
   - GitHub Actions

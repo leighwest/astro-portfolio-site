@@ -3,7 +3,7 @@ title: Cupcakes API
 publishDate: 2026-05-27 00:00:00
 img: /assets/cupcake-store.webp
 img_alt: llustrated pink-and-cream cupcake shopfront with a striped awning, a window display of frosted cupcakes, and an "Open" sign on the door
-description: |
+description: >-
   An event-driven cupcake ordering service on AWS, built as a working
   demonstration of cloud architecture, CI/CD, and deliberate cost engineering.
 tags:

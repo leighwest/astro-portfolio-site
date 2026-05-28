@@ -3,7 +3,7 @@ title: Zero-Touch Server Provisioning with Terraform and cloud-init
 publishDate: 2026-05-24 00:00:00
 img: /assets/blog/zero-touch-provisioning.webp
 img_alt: A Terraform logo and a cloud-init configuration file connected by an arrow to a provisioned server
-description: |
+description: >-
   One terraform apply takes me from nothing to a running, SSL-secured Django app with no manual SSH at any point. Here's how Terraform renders a cloud-init template — and the handful of things that bit me along the way.
 tags:
   - Terraform

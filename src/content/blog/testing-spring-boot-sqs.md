@@ -3,7 +3,7 @@ title: Testing a Spring Boot SQS App Without Hitting AWS
 publishDate: 2026-05-02 00:00:00
 img: /assets/blog/test-containers.webp
 img_alt: A Docker container, database stack, and Spring Boot logo arranged in front of a code editor screen
-description: |
+description: >-
   When your app connects to SQS on startup, running tests gets a little complicated. Here's how I set up H2 for unit tests, Testcontainers for integration tests, and stopped the SQS listener from trying to connect to AWS every time I ran the suite.
 tags:
   - Spring Boot
