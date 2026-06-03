@@ -54,9 +54,7 @@ The two EC2 instances controlled by the app are provisioned by Terraform in a st
 
 ## Where this is going
 
-The next project in the pipeline is a meaningful step up in complexity: a mini PC running k3s locally, with Grafana, Loki, and Prometheus, hosting a small issue tracker as the application under observation. Instance Starter has been about provisioning, deployment, and operating a single-server application well; the next one is about Kubernetes, observability, and the platform engineering side of the same problem.
-
-A couple of smaller items remain on the Instance Starter backlog itself: automating the self-hosted runner installation in cloud-init (currently a manual step after each `terraform apply`), and working around a Vultr reserved-IP detach issue during `terraform destroy`.
+A couple of smaller items remain on the Instance Starter backlog itself: working around a Vultr reserved-IP detach issue during terraform destroy, where the API errors if the instance is already gone before the IP is detached.
 
 ## Tech stack
 
