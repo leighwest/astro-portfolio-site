@@ -133,6 +133,8 @@ The fix is to write the file with no `owner:` at all and fix ownership later in 
 
 If you're wondering why the Nginx config a few lines up gets away with `owner: root:root` — `root` exists from the very first instruction. The phase ordering only bites you for users you create yourself. Anything written for `deployer` gets written as root and chowned afterwards; the `.env` file follows the same pattern via `/tmp`.
 
+---
+
 ## The Reserved IP Solves a Chicken-and-Egg Problem
 
 Django's `ALLOWED_HOSTS` setting is a security control; it's the list of `Host` headers the app will answer to. The server's own public IP has to be on that list, or every request gets rejected.
@@ -189,12 +191,8 @@ This step only works because the domain already resolves to the server — Certb
 
 ## What's Still Manual
 
-The post would be dishonest if it claimed the apply is _completely_ hands-off. Three things still need a human:
-
-**The self-hosted CI/CD runner.** Deploys run through a self-hosted GitHub Actions runner on the server, and installing it isn't in `cloud-init` yet. That runner is interesting enough (outbound-only, no SSH secrets in GitHub) to deserve its own post, so I've left it out of this one.
-
-**GHCR authentication.** The server pulls its Docker image from the GitHub Container Registry, which needs a `docker login` with a personal access token. That's a manual step after each fresh provision.
+The post would be dishonest if it claimed the apply is _completely_ hands-off. One thing still needs a human:
 
 **The reserved IP on destroy.** Vultr's API errors when detaching a reserved IP from an instance that's already gone, so `terraform destroy` needs a small manual nudge — delete the reserved IP in the dashboard and `terraform state rm` it before re-applying.
 
-None of these stops the core promise: from one command, the server goes from nothing to a running, HTTPS-secured app. The remaining edges are on the list.
+This doesn't stop the core promise: from one command, the server goes from nothing to a running, HTTPS-secured app. The remaining edges are on the list.
