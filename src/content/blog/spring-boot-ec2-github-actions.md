@@ -253,4 +253,4 @@ For reference, the secrets the pipeline needs:
 
 The pipeline isn't complicated, but getting the details right — the state check before starting the instance, the ECR login flow, the SSM fetch approach, the `overwrite: true` on SCP — took a few iterations. Hopefully this saves you some of that.
 
-> _This post reflects the pipeline as it stood at [v1.0.0](https://github.com/leighwest/orders/tree/v1.0.0). The SSH and SCP steps were later replaced with SSM Session Manager — see [that post](#) for the updated pipeline._
+> _This post reflects the pipeline as it stood at [v1.0.0](https://github.com/leighwest/orders/tree/v1.0.0). The SSH and SCP steps were later replaced with SSM Session Manager in [v1.1.0](https://github.com/leighwest/orders/tree/v1.1.0)._
