@@ -195,4 +195,4 @@ The post would be dishonest if it claimed the apply is _completely_ hands-off. O
 
 **The reserved IP on destroy.** Vultr's API errors when detaching a reserved IP from an instance that's already gone, so `terraform destroy` needs a small manual nudge — delete the reserved IP in the dashboard and `terraform state rm` it before re-applying.
 
-This doesn't stop the core promise: from one command, the server goes from nothing to a running, HTTPS-secured app. The remaining edges are on the list.
+This doesn't stop the core promise: from one command, the server goes from nothing to a running, HTTPS-secured app. The runner registration and GHCR authentication that complete the automation are covered in the [companion post](/blog/self-hosted-runner).
