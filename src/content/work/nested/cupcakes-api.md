@@ -24,7 +24,7 @@ links:
 
 The Cupcakes API is a real, deployed ordering service for a fictional cupcake shop. It is not a tutorial project sitting in a repo — it runs on AWS, it processes orders end to end, and it sends real email. I built it as a vehicle for working through cloud architecture, infrastructure-as-code, and CI/CD properly, with every decision documented as I went.
 
-The interesting part is not the cupcakes. It is everything around them: an event-driven backend, fully automated deployment, and an infrastructure setup that has been steadily engineered down from roughly $40 AUD a month to under $20.
+The interesting part is not the cupcakes. It is everything around them: an event-driven backend, fully automated deployment, and an infrastructure setup that has been steadily engineered down from roughly $33 AUD a month to under $15.
 
 ## How it works
 
@@ -36,7 +36,9 @@ That indirection is the point. Rather than one service doing everything in a sin
 
 The architecture is event-driven, but the part I am most pleased with is the operational side.
 
-**Cost engineering.** The service does not need to be available overnight, so it isn't. An EventBridge schedule starts the EC2 instance at 7am and stops it at 8pm, Melbourne time, with daylight saving handled automatically. Because the instance only runs for thirteen hours a day, compute cost roughly halves. I also dropped the Elastic IP — a flat monthly charge — and instead update the DNS record with the instance's new public IP each morning when it boots. Together these two changes have taken the all-in running cost from around $40 AUD a month to around $19, with a planned move to ARM-based Graviton instances expected to bring it under $10.
+**Cost engineering.** The service does not need to be available overnight, so it isn't. An EventBridge schedule starts the EC2 instance at 7am and stops it at 8pm, Melbourne time, with daylight saving handled automatically. Because the instance only runs for thirteen hours a day, compute cost roughly halves. I also dropped the Elastic IP — a flat monthly charge — and instead update the DNS record with the instance's new public IP each morning when it boots. Together these changes have taken the all-in running cost from around $33 AUD a month to around $14.
+
+**Availability and the closed page.** HTTPS is terminated at CloudFront, which sits permanently in front of the EC2. When the instance is stopped overnight, CloudFront detects the failure automatically and serves a static closed page from S3 — visitors see an image of a sleeping cupcake rather than a connection error. This also means the SSL certificate is managed by AWS and never touches the EC2 filesystem.
 
 **Deployment.** Every push to the main branch builds, tests, and packages the application, pushes a Docker image to ECR, and deploys it to EC2 — no manual steps. A second repository manages all the AWS infrastructure as Terraform, with its own pipeline. Application secrets live in AWS Systems Manager Parameter Store as a single source of truth, rather than being scattered across config files. I wrote up [deploying to EC2 with GitHub Actions and ECR](/blog/spring-boot-ec2-github-actions) separately.
 
@@ -46,15 +48,15 @@ The architecture is event-driven, but the part I am most pleased with is the ope
 
 ## A note on availability
 
-The live API is online between roughly 7am and 8pm Melbourne time. Keeping a hobby-scale service running around the clock costs money for no real benefit, so the infrastructure is built around a scheduled uptime window — the trade-off being explicit and managed rather than hidden. If you visit outside those hours, the site will be unreachable; that is the system working as designed, not a fault.
+The live API is online between roughly 7am and 8pm Melbourne time. Keeping a hobby-scale service running around the clock costs money for no real benefit, so the infrastructure is built around a scheduled uptime window — the trade-off being explicit and managed rather than hidden. If you visit outside those hours, CloudFront will serve a closed page; that is the system working as designed, not a fault.
 
 ## Where this is going
 
-The project is built in deliberate, documented stages, and the next few are about modernising the application itself: migrating the database from MySQL to Postgres for a lighter footprint and a cleaner cloud-native story, upgrading to Java 21 with virtual threads and a tuned JVM, and finally compiling the service to a GraalVM native image. The native image is the headline goal — it cuts resident memory from roughly 300 MB to 150 MB and startup from around 30 seconds to 5, which is what allows the whole stack to run comfortably on the smallest viable instance. Each of these stages is being written up as I complete it.
+The project is built in deliberate, documented stages, and the next few are about modernising the application itself: upgrading to Java 21 with virtual threads and a tuned JVM, and finally compiling the service to a GraalVM native image. The native image is the headline goal — it cuts resident memory from roughly 300 MB to 150 MB and startup from around 30 seconds to 5, which is what allows the whole stack to run comfortably on the smallest viable instance. Each of these stages is being written up as I complete it.
 
 ## Tech stack
 
-Java 17 and Spring Boot, Spring Cloud AWS for SQS and S3, AWS SDK v2. MySQL in production with H2 and Testcontainers for tests. Docker Compose for local development and production, Nginx for HTTP termination and HTTPS. AWS — EC2, Lambda, SQS, SES, EventBridge, ECR, Route 53, Systems Manager. Terraform for all infrastructure, GitHub Actions for CI/CD.
+Java 17 and Spring Boot, Spring Cloud AWS for SQS and S3, AWS SDK v2. Postgres in production with H2 and Testcontainers for tests. Flyway for schema management. Docker Compose for local development and production, Nginx as a reverse proxy. AWS — EC2, CloudFront, ACM, Lambda, SQS, SES, EventBridge, ECR, Route 53, Systems Manager. Terraform for all infrastructure, GitHub Actions for CI/CD.
 
 ## Links
 
