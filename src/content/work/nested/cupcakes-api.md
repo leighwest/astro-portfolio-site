@@ -52,11 +52,13 @@ The live API is online between roughly 7am and 8pm Melbourne time. Keeping a hob
 
 ## Where this is going
 
-The project is built in deliberate, documented stages, and the next few are about modernising the application itself: upgrading to Java 21 with virtual threads and a tuned JVM, and finally compiling the service to a GraalVM native image. The native image is the headline goal — it cuts resident memory from roughly 300 MB to 150 MB and startup from around 30 seconds to 5, which is what allows the whole stack to run comfortably on the smallest viable instance. Each of these stages is being written up as I complete it.
+The service now runs on Java 21 with virtual threads, a tuned JVM (SerialGC, 256 MB heap cap), and enriched order confirmation emails with item details and cupcake images. Resident memory for the Spring Boot container dropped from ~465 MB on MySQL + Java 17 to ~303 MB on Postgres + Java 21 tuned — primarily driven by the JVM flags rather than the Java version itself.
+
+The next stage is compiling the service to a GraalVM native image. The native image is the headline goal — it cuts resident memory from ~303 MB to roughly 150 MB and startup from around 13 seconds to under 5, which gives comfortable headroom to drop to the smallest viable instance. Each of these stages is being written up as I complete it.
 
 ## Tech stack
 
-Java 17 and Spring Boot, Spring Cloud AWS for SQS and S3, AWS SDK v2. Postgres in production with H2 and Testcontainers for tests. Flyway for schema management. Docker Compose for local development and production, Nginx as a reverse proxy. AWS — EC2, CloudFront, ACM, Lambda, SQS, SES, EventBridge, ECR, Route 53, Systems Manager. Terraform for all infrastructure, GitHub Actions for CI/CD.
+Java 21 and Spring Boot 3.3.6, Spring Cloud AWS 3.2.1 for SQS and S3, AWS SDK v2. Virtual threads enabled, JVM tuned for low-memory operation (SerialGC, 256 MB heap). Postgres in production with H2 and Testcontainers for tests. Flyway for schema management. Docker Compose for local development and production, Nginx as a reverse proxy. AWS — EC2, CloudFront, ACM, Lambda, SQS, SES, EventBridge, ECR, Route 53, Systems Manager, S3. Terraform for all infrastructure, GitHub Actions for CI/CD.
 
 ## Links
 
