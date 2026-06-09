@@ -38,7 +38,7 @@ The architecture is event-driven, but the part I am most pleased with is the ope
 
 **Cost engineering.** The service does not need to be available overnight, so it isn't. An EventBridge schedule starts the EC2 instance at 7am and stops it at 8pm, Melbourne time, with daylight saving handled automatically. Because the instance only runs for thirteen hours a day, compute cost roughly halves. I also dropped the Elastic IP — a flat monthly charge — and instead update the DNS record with the instance's new public IP each morning when it boots. Together these changes have taken the all-in running cost from around $33 AUD a month to around $14.
 
-**Availability and the closed page.** HTTPS is terminated at CloudFront, which sits permanently in front of the EC2. When the instance is stopped overnight, CloudFront detects the failure automatically and serves a static closed page from S3 — visitors see an image of a sleeping cupcake rather than a connection error. This also means the SSL certificate is managed by AWS and never touches the EC2 filesystem.
+**Availability and the closed page.** HTTPS is terminated at CloudFront, which sits permanently in front of the EC2. When the instance stops each evening, a CloudFront Function intercepts incoming requests and checks a state flag in CloudFront KeyValueStore before CloudFront even attempts the origin. If the flag is `down`, the closed page is returned immediately — no origin attempt, no timeout, zero hang. The stop Lambda writes the flag before stopping the instance; the start Lambda writes it back after the health check passes. Visitors see an image of a sleeping cupcake the moment the instance stops, rather than waiting for a connection timeout. The SSL certificate is managed by AWS and never touches the EC2 filesystem.
 
 **Deployment.** Every push to the main branch builds, tests, and packages the application, pushes a Docker image to ECR, and deploys it to EC2 — no manual steps. A second repository manages all the AWS infrastructure as Terraform, with its own pipeline. Application secrets live in AWS Systems Manager Parameter Store as a single source of truth, rather than being scattered across config files. I wrote up [deploying to EC2 with GitHub Actions and ECR](/blog/spring-boot-ec2-github-actions) separately.
 
@@ -52,13 +52,13 @@ The live API is online between roughly 7am and 8pm Melbourne time. Keeping a hob
 
 ## Where this is going
 
-The service now runs on Java 21 with virtual threads, a tuned JVM (SerialGC, 256 MB heap cap), and enriched order confirmation emails with item details and cupcake images. Resident memory for the Spring Boot container dropped from ~465 MB on MySQL + Java 17 to ~303 MB on Postgres + Java 21 tuned — primarily driven by the JVM flags rather than the Java version itself.
+The service now runs on Java 21 with virtual threads, a tuned JVM (SerialGC, 256 MB heap cap), and enriched order confirmation emails with item details and cupcake images. Resident memory for the Spring Boot container dropped from ~465 MB on MySQL + Java 17 to ~303 MB on Postgres + Java 21 tuned — primarily driven by the JVM flags rather than the Java version itself. That memory target confirmed t4g.micro viability; GraalVM native image was evaluated and dropped — the 20-minute CI build time is not a trade-off that makes sense for a scheduled stop/start setup where startup time is irrelevant.
 
-The next stage is compiling the service to a GraalVM native image. The native image is the headline goal — it cuts resident memory from ~303 MB to roughly 150 MB and startup from around 13 seconds to under 5, which gives comfortable headroom to drop to the smallest viable instance. Each of these stages is being written up as I complete it.
+The next stages are Auth0 machine-to-machine OAuth2 on a protected admin endpoint with a Karate end-to-end test suite running daily against the live API, and an observability layer — X-Ray distributed tracing, structured JSON logging to CloudWatch, and a dead-letter queue with an alarm on depth.
 
 ## Tech stack
 
-Java 21 and Spring Boot 3.3.6, Spring Cloud AWS 3.2.1 for SQS and S3, AWS SDK v2. Virtual threads enabled, JVM tuned for low-memory operation (SerialGC, 256 MB heap). Postgres in production with H2 and Testcontainers for tests. Flyway for schema management. Docker Compose for local development and production, Nginx as a reverse proxy. AWS — EC2, CloudFront, ACM, Lambda, SQS, SES, EventBridge, ECR, Route 53, Systems Manager, S3. Terraform for all infrastructure, GitHub Actions for CI/CD.
+Java 21 and Spring Boot 3.3.6, Spring Cloud AWS 3.2.1 for SQS and S3, AWS SDK v2. Virtual threads enabled, JVM tuned for low-memory operation (SerialGC, 256 MB heap). Postgres in production with H2 and Testcontainers for tests. Flyway for schema management. Docker Compose for local development and production, Nginx as a reverse proxy. AWS — EC2, CloudFront, CloudFront Functions, CloudFront KeyValueStore, ACM, Lambda, SQS, SES, EventBridge, ECR, Route 53, Systems Manager, S3. Terraform for all infrastructure, GitHub Actions for CI/CD.
 
 ## Links
 
