@@ -58,7 +58,7 @@ const { Content } = await render(entry);
         </div>
       </header>
       <main class="wrapper">
-        <div class="stack gap-10 content">
+        <div class="stack gap-10">
           {
             entry.data.img && (
               <img src={entry.data.img} alt={entry.data.img_alt || ''} />
@@ -111,8 +111,9 @@ const { Content } = await render(entry);
   }
 
   .content {
-    max-width: 65ch;
+    max-width: min(65ch, 100%);
     margin-inline: auto;
+    overflow-wrap: break-word;
   }
 
   .content > :global(* + *) {
@@ -135,13 +136,14 @@ const { Content } = await render(entry);
   }
 
   .content :global(blockquote) {
-    font-size: var(--text-lg);
-    font-family: var(--font-brand);
-    font-weight: 600;
-    line-height: 1.1;
-    padding-inline-start: 1.5rem;
-    border-inline-start: 0.25rem solid var(--accent-dark);
-    color: var(--gray-0);
+    font-size: var(--text-sm);
+    font-family: var(--font-body);
+    font-weight: normal;
+    line-height: 1.5;
+    padding: 0.25rem 0 0.25rem 1rem;
+    border-inline-start: 2px solid var(--gray-700);
+    color: var(--gray-400);
+    margin: 1.5rem 0;
   }
 
   .content :global(pre) {
@@ -174,10 +176,6 @@ const { Content } = await render(entry);
     .details {
       flex-direction: row;
       gap: 2.5rem;
-    }
-
-    .content :global(blockquote) {
-      font-size: var(--text-2xl);
     }
   }
 </style>
