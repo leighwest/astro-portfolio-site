@@ -58,7 +58,7 @@ The next stages are Auth0 machine-to-machine OAuth2 on a protected admin endpoin
 
 ## Tech stack
 
-Java 21 and Spring Boot 3.3.6, Spring Cloud AWS 3.2.1 for SQS and S3, AWS SDK v2. Virtual threads enabled, JVM tuned for low-memory operation (SerialGC, 256 MB heap). Postgres in production with H2 and Testcontainers for tests. Flyway for schema management. Docker Compose for local development and production, Nginx as a reverse proxy. AWS — EC2, CloudFront, CloudFront Functions, CloudFront KeyValueStore, ACM, Lambda, SQS, SES, EventBridge, ECR, Route 53, Systems Manager, S3. Terraform for all infrastructure, GitHub Actions for CI/CD.
+Java 21 and Spring Boot 3.3.6, Spring Cloud AWS 3.2.1 for SQS and S3, AWS SDK v2. Virtual threads enabled, JVM tuned for low-memory operation (SerialGC, 256 MB heap). Postgres in production with H2 and Testcontainers for tests. Flyway for schema management. Docker Compose for local development and production, Nginx as a reverse proxy. AWS — EC2, CloudFront, CloudFront Functions, CloudFront KeyValueStore, ACM, Lambda, SQS, SES, EventBridge, ECR, Systems Manager, S3. Terraform for all infrastructure, GitHub Actions for CI/CD.
 
 ## Links
 
