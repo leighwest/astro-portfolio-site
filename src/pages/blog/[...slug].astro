@@ -153,6 +153,25 @@ const { Content } = await render(entry);
     margin: 1.5rem 0;
   }
 
+  .content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: var(--text-sm);
+  }
+
+  .content :global(th),
+  .content :global(td) {
+    border: 1px solid var(--gray-800);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+  }
+
+  .content :global(th) {
+    background: var(--gray-999, var(--gray-900));
+    font-weight: 600;
+  }
+
   .back-link,
   .content :global(a) {
     text-decoration: 1px solid underline transparent;
