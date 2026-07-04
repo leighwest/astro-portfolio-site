@@ -11,11 +11,12 @@ tags:
   - Flyway
   - AWS
   - Database
+  - JVM
 ---
 
 ## TL;DR
 
-MySQL was sitting at around 458 MiB on a small EC2 instance shared with the app and Nginx — more than the app's own footprint. Postgres idles at around 51 MiB doing the same job. I took the migration as the opportunity to stop letting Hibernate manage the schema and moved to Flyway with a hand-written initial migration, validated against the JPA entities at startup. The swap itself is mostly a connector change; the schema-ownership shift is the part worth understanding.
+MySQL was sitting at around 458 MiB on a small EC2 instance shared with the app and Nginx — more than the app's own footprint. Postgres idles at around 51 MiB doing the same job. I took the migration as the opportunity to stop letting Hibernate manage the schema and moved to Flyway with a hand-written initial migration, validated against the JPA entities at startup. The swap itself is mostly a connector change; the schema-ownership shift is the part worth understanding. The same change set also bumped the app to Java 21 and tuned the JVM, saving another ~145 MiB — details below.
 
 ---
 
@@ -39,9 +40,11 @@ The decision came down to two things, the first of which carried most of the wei
 
 I considered SQLite briefly, since it would use even less memory. But it would have meant the integration tests no longer ran against something production-shaped — Testcontainers spinning up a real Postgres is part of what makes those tests trustworthy. Dropping to an embedded file database would have traded away that realism for memory I didn't strictly need. Postgres was the right balance.
 
-| Metric    | MySQL container (idle) | Postgres container (idle) |
-| ------    | ---------------------- | ------------------------- |
-| Memory    | ~458 MiB               | ~51 MiB                   |
+| Milestone | Orders App | Database | Nginx | 
+|---|---|---|---|
+| MySQL + Java 17 | 465 MiB | 458 MiB (MySQL) | 5 MiB | 
+| Postgres + Java 17 | 448 MiB | 51 MiB (Postgres) | 3 MiB | 
+| Postgres + Java 21 tuned | 303 MiB | 51 MiB | 7 MiB | 
 
 ---
 
@@ -192,6 +195,16 @@ The `depends_on: condition: service_healthy` is a small but satisfying cleanup. 
 
 ---
 
+## The Other Half: Java 21 and Three JVM Flags
+
+The same change set also bumped the app from Java 17 to 21 and pulled Spring Boot up to 3.3.6. Worth a paragraph, not a post of its own.
+
+The bump itself was uneventful — Spring Boot 3.3 supports Java 21 cleanly, and the app compiled and passed on the first try. What actually moved the needle was three JVM flags added to the container command at the same time: `-XX:+UseSerialGC` (a lighter-weight collector than the G1 default, appropriate for a workload with almost no concurrent load), `-Xmx256m` (capping the heap instead of letting the JVM claim a quarter of the box by default), and `-Xss256k` (a smaller per-thread stack, since the app's call stacks don't need the default 1 MB). Combined, they're the difference between the Post 14P1 and Post 14P2 rows in the table above — orders dropped from 448 MiB to 303 MiB, roughly 145 MiB back, on top of what Postgres already returned on the database side.
+
+None of that saving came from Java 21 itself. The same three flags would have had a similar effect on Java 17 — they're ordinary HotSpot options, not new in this release. Java 21's one direct contribution was virtual threads (`spring.threads.virtual.enabled=true`, one line, no code changes), which help when a workload is both highly concurrent and dominated by blocking I/O. This app is neither — it handles the occasional order — so virtual threads are a correctly-configured no-op here. They cost nothing and are already in place for the day the app needs them, which is reason enough to leave them on.
+
+---
+
 ## Was It Worth It?
 
 For this project, clearly yes — the memory saving was the whole point, and it's precisely what the migration achieved. The database container went from being the heaviest thing on the instance to one of the lightest, which made dropping to a smaller instance size viable.
@@ -200,4 +213,4 @@ But the database swap is almost the less interesting half of the change. The mor
 
 If you're running MySQL on a memory-constrained box for a workload that doesn't need it, Postgres is worth a look. And whatever database you're on, if Hibernate is still managing your schema, the switch to a migration tool is worth making before the schema gets complicated enough that the switch is painful.
 
-> *This post covers the database half of a larger piece of work. The same change set also bumped the app to Java 21 and tuned the JVM — that's a [separate post](/blog/spring-boot-java-21-virtual-threads). The code referenced here is tagged [v1.3.0](https://github.com/leighwest/orders/tree/v1.3.0).*
+> *The code referenced here is tagged [v1.3.0](https://github.com/leighwest/orders/tree/v1.3.0); the Java 21 and JVM tuning work covered above shipped in [v1.4.0](https://github.com/leighwest/orders/tree/v1.4.0).*
