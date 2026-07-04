@@ -1,14 +1,25 @@
 ---
 import { getCollection } from 'astro:content';
+import type { GetStaticPaths, Page } from 'astro';
+import type { CollectionEntry } from 'astro:content';
 
 import ContactCTA from '../../components/ContactCTA.astro';
 import Hero from '../../components/Hero.astro';
 import Pill from '../../components/Pill.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
-);
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = (await getCollection('blog')).sort(
+    (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+  );
+  return paginate(posts, { pageSize: 6 });
+}) satisfies GetStaticPaths;
+
+interface Props {
+  page: Page<CollectionEntry<'blog'>>;
+}
+
+const { page } = Astro.props;
 ---
 
 <BaseLayout
@@ -24,7 +35,7 @@ const posts = (await getCollection('blog')).sort(
       />
       <ul class="grid" role="list">
         {
-          posts.map((post) => (
+          page.data.map((post) => (
             <li class="article">
               <div class="article__inner">
                 <div class="article__head">
@@ -70,6 +81,36 @@ const posts = (await getCollection('blog')).sort(
           ))
         }
       </ul>
+
+      {
+        page.lastPage > 1 && (
+          <nav class="pagination" aria-label="Blog pagination">
+            {page.url.prev ? (
+              <a class="pagination__link" href={page.url.prev}>
+                ← Newer
+              </a>
+            ) : (
+              <span class="pagination__link pagination__link--disabled">
+                ← Newer
+              </span>
+            )}
+
+            <span class="pagination__status">
+              Page {page.currentPage} of {page.lastPage}
+            </span>
+
+            {page.url.next ? (
+              <a class="pagination__link" href={page.url.next}>
+                Older →
+              </a>
+            ) : (
+              <span class="pagination__link pagination__link--disabled">
+                Older →
+              </span>
+            )}
+          </nav>
+        )
+      }
     </main>
     <ContactCTA />
   </div>
@@ -205,6 +246,45 @@ const posts = (await getCollection('blog')).sort(
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 1180px;
+    margin: 1rem 16px 0 16px;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-800);
+  }
+
+  .pagination__link {
+    font-size: var(--text-sm);
+    color: var(--gray-0);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--gray-800);
+    border-radius: 999px;
+    background: var(--gradient-subtle);
+    transition:
+      color var(--theme-transition),
+      box-shadow var(--theme-transition);
+  }
+
+  .pagination__link:hover {
+    color: var(--accent-regular);
+    box-shadow: var(--shadow-md);
+  }
+
+  .pagination__link--disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .pagination__status {
+    font-size: var(--text-sm);
+    color: var(--gray-400);
   }
 
   @media (max-width: 60em) {
